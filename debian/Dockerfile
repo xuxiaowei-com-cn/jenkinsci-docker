@@ -7,6 +7,7 @@ ARG DEBIAN_VARIANT="-slim"
 FROM "${DEBIAN_NAME}:${DEBIAN_RELEASE_LINE}-${DEBIAN_VERSION}${DEBIAN_VARIANT}" AS jre-and-war
 
 ARG JAVA_VERSION=21.0.11_10
+ARG JDK_DOWNLOAD_URL
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -20,9 +21,20 @@ RUN apt-get update \
     gnupg \
     jq \
   && rm -rf /var/lib/apt/lists/* \
-  && /usr/bin/jdk-download.sh
+  && if [ -n "${JDK_DOWNLOAD_URL}" ]; then \
+       echo "==> Downloading JDK from ${JDK_DOWNLOAD_URL}"; \
+       curl -fsSL "${JDK_DOWNLOAD_URL}" -o /tmp/jdk.tar.gz; \
+       tar -xzf /tmp/jdk.tar.gz -C /opt/; \
+       EXTRACTED_DIR="$(tar -tzf /tmp/jdk.tar.gz | head -n 1 | cut -f1 -d"/")"; \
+       mv "/opt/${EXTRACTED_DIR}" "/opt/jdk-${JAVA_VERSION}"; \
+       rm -f /tmp/jdk.tar.gz; \
+     else \
+       /usr/bin/jdk-download.sh; \
+     fi
 
 ENV PATH="/opt/jdk-${JAVA_VERSION}/bin:${PATH}"
+
+RUN java -version
 
 # Generate smaller java runtime without unneeded files
 # for now we include the full module path to maintain compatibility
