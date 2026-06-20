@@ -24,8 +24,8 @@ jobs:
 
       - name: Build image
         env:
-          JAVA_VERSION: 21.0.11_10
-          LOONGSON_JAVA_VERSION: 21.11.38-fx
+          JAVA_VERSION: 25.0.3_9
+          LOONGSON_JAVA_VERSION: 25.4.28-fx
         run: |
           TAG="${{ env.NAMESPACE }}/jenkins-loong64"
           echo "==> Building ${TAG}"
@@ -38,7 +38,7 @@ jobs:
             --build-arg "DEBIAN_VERSION=slim" \
             --build-arg "DEBIAN_VARIANT=" \
             --build-arg "JAVA_VERSION=${{ env.JAVA_VERSION }}" \
-            --build-arg "JDK_DOWNLOAD_URL=https://ftp.loongnix.cn/Java/openjdk21/loongson${{ env.LOONGSON_JAVA_VERSION }}-jdk${{ env.JAVA_VERSION }}-linux-loongarch64-glibc2.34.tar.gz" \
+            --build-arg "JDK_DOWNLOAD_URL=https://ftp.loongnix.cn/Java/openjdk25/loongson${{ env.LOONGSON_JAVA_VERSION }}-jdk${{ env.JAVA_VERSION }}-linux-loongarch64-glibc2.34.tar.gz" \
             -t "${TAG}" \
             .
           echo "==> Done: ${TAG}"
