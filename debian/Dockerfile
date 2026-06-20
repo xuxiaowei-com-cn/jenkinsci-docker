@@ -59,7 +59,7 @@ RUN curl -fsSL "${WAR_URL}" -o /war/jenkins.war \
   && gpg --import /war/jenkins-key.pub \
   && gpg --verify --trust-model direct /war/jenkins.war.asc /war/jenkins.war
 
-FROM debian:"${DEBIAN_RELEASE_LINE}-${DEBIAN_VERSION}${DEBIAN_VARIANT}" AS controller
+FROM "${DEBIAN_NAME}:${DEBIAN_RELEASE_LINE}-${DEBIAN_VERSION}${DEBIAN_VARIANT}" AS controller
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
