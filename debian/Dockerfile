@@ -91,7 +91,7 @@ RUN apt-get update \
 # Download and unpack the tar.gz distribution
 ARG GIT_LFS_VERSION=3.7.1
 # hadolint ignore=DL4006
-RUN arch=$(uname -m | sed -e 's/x86_64/amd64/g' -e 's/aarch64/arm64/g') \
+RUN arch=$(uname -m | sed -e 's/x86_64/amd64/g' -e 's/aarch64/arm64/g' -e 's/loongarch64/loong64/g') \
   && curl -L -s -o git-lfs.tgz "https://github.com/git-lfs/git-lfs/releases/download/v${GIT_LFS_VERSION}/git-lfs-linux-${arch}-v${GIT_LFS_VERSION}.tar.gz" \
   && tar xzf git-lfs.tgz \
   && bash git-lfs-*/install.sh \
