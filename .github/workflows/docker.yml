@@ -24,13 +24,14 @@ jobs:
 
       - name: Build image
         run: |
-          docker images
           TAG="${{ env.NAMESPACE }}/jenkins-loong64"
           echo "==> Building ${TAG}"
           docker buildx build \
             --no-cache \
             -f debian/Dockerfile \
+            --platform linux/loong64 \
+            --build-arg "DEBIAN_NAME=lcr.loongnix.cn/debian" \
+            --build-arg "DEBIAN_RELEASE_LINE=forky" \
             -t "${TAG}" \
             .
           echo "==> Done: ${TAG}"
-          docker images
