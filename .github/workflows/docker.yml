@@ -30,7 +30,6 @@ jobs:
           docker buildx build \
             --no-cache \
             -f debian/Dockerfile \
-            --platform linux/loong64 \
             -t "${TAG}" \
             .
           echo "==> Done: ${TAG}"
