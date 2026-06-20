@@ -32,6 +32,8 @@ jobs:
             --platform linux/loong64 \
             --build-arg "DEBIAN_NAME=lcr.loongnix.cn/debian" \
             --build-arg "DEBIAN_RELEASE_LINE=forky" \
+            --build-arg "DEBIAN_VERSION=slim" \
+            --build-arg "DEBIAN_VARIANT=" \
             -t "${TAG}" \
             .
           echo "==> Done: ${TAG}"
